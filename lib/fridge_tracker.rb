@@ -52,6 +52,8 @@ if option.upcase == 'B'
     fridge.location = Fridge_location
     fridge.brand = Fridge_brand
     fridge.size = Fridge_size
+    fridge.has_food = false
+    fridge.has_drink = false 
   end 
 
 end
@@ -69,7 +71,7 @@ if option.upcase == 'C'
 
   puts "Enter The ID Of A Fridge to Delete"
   fridge_id_to_delete = gets.chomp
-  Fridge.delete(fridge_id_to_delete)
+  Fridge.destroy(fridge_id_to_delete)
 
 end
 ### END Option C
@@ -77,12 +79,22 @@ end
 ### Option D) List All Food In A Fridge Of Your Choice
 if option.upcase == 'D'
 
-  puts "Enter The ID Of A Fridge"
-
   #List Fridge Options
   Fridge.all.map do |fridge|
     puts "Fridge ID = " + fridge.id.to_s
     puts fridge.location.to_s
+    puts "___ ___ ___"
+  end
+
+  puts "Enter The ID Of A Fridge"
+  fridge_to_look_in_id = gets.chomp
+  fridge_to_look_in = Fridge.find(fridge_to_look_in_id)
+  
+  fridge_to_look_in.food.map do |food|
+    puts "Looks like we got a(n) " + food.name.to_s
+    puts "I'd reckon it's about " + food.weight.to_s + " pounds"
+    puts "Vegan friendly? " + food.is_vegan.to_s
+    puts "Looks like it's been around since " + food.created_at.to_s
     puts "___ ___ ___"
   end
 
