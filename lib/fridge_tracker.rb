@@ -212,15 +212,26 @@ end
 
 ### Option J) Consume ALL Of A Drink Item From A Fridge Of Your Choice (Delete It)
 if option.upcase == 'J'
-
-  puts "Enter The ID Of A Fridge"
-
-  #List Fridge Options
+  # List Fridge Options
   Fridge.all.map do |fridge|
     puts "Fridge ID = " + fridge.id.to_s
     puts fridge.location.to_s
     puts "___ ___ ___"
   end
-
+  puts "Enter The ID Of A Fridge To Look In"
+  fridge_to_look_in_id = gets.chomp
+  fridge_to_look_in = Fridge.find(fridge_to_look_in_id)
+  # Display those drinks in that Fridge
+  fridge_to_look_in.drink.map do |drink|
+    puts "Drink ID: " + drink.id.to_s
+    puts "Looks like we got a(n) " + drink.name.to_s
+    puts drink.size.to_s
+    puts "Looks like it's been around since " + drink.created_at.to_s
+    puts "___ ___ ___"
+  end
+  # Choose drink to drink
+  puts "Enter the ID of the drink to drink"
+  drink_to_drink = gets.chomp
+  fridge_to_look_in.drink.destroy(drink_to_drink)
 end
 ### END Option J
