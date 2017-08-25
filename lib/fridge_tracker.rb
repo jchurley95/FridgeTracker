@@ -197,16 +197,32 @@ end
 
 ### Option I) Consume PART Of A Food Item From A Fridge Of Your Choice (Update Size In Ounces)
 if option.upcase == 'I'
-
-  puts "Enter The ID Of A Fridge"
-
   #List Fridge Options
   Fridge.all.map do |fridge|
     puts "Fridge ID = " + fridge.id.to_s
     puts fridge.location.to_s
     puts "___ ___ ___"
   end
-
+  puts "Enter The ID Of A Fridge"
+  fridge_to_look_in_id = gets.chomp
+  fridge_to_look_in = Fridge.find(fridge_to_look_in_id)
+  # Display those drinks in that Fridge
+  fridge_to_look_in.drink.map do |drink|
+    puts "Drink ID: " + drink.id.to_s
+    puts "Looks like we got a(n) " + drink.name.to_s
+    puts drink.size.to_s
+    puts "Looks like it's been around since " + drink.created_at.to_s
+    puts "___ ___ ___"
+  end
+  # Choose drink to drink
+  puts "Enter the ID of the drink to drink"
+  drink_to_drink_id = gets.chomp
+  drink_to_drink = Drink.find(drink_to_drink_id)
+  puts "Enter the amount to drink"
+  drink_size = gets.chomp
+  new_size = (drink_to_drink.size - drink_size.to_i)
+  drink_to_drink.update_attribute(:size, new_size)
+  puts drink_to_drink.name.to_s + " new size is " + new_size.to_s
 end
 ### END Option I
 
